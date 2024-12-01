@@ -13,7 +13,7 @@ This project is a Cinema Seat Reservation System built in F# to allow users to m
 -   **Registration Form**:
 
     -   Allows new users to register by providing a username and password.
-    -   Stores user credentials securely (e.g., hashed passwords for security).
+      
 
 -   **Login Form**:
     -   Users log in with their registered credentials to access the booking system.
