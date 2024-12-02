@@ -1,32 +1,46 @@
 ﻿open System
 open System.Windows.Forms
+open System.Drawing
+open FileReader
+open MovieCard
+open CinemaSeatTypes
 
-[<EntryPoint; STAThread>]
+
+
+let rec addMovieCards (seats: Seat List) (form: Form) (x: int) (y: int) (moviesInRow: int) =
+    match seats with
+    | [] -> ()  // Base case: no more seats to process
+    | seat :: rest ->
+        let card = createMovieCard seat x y
+        form.Controls.Add(card)
+
+        // Calculate new x and y
+        let newX = if moviesInRow = 2 then 10 else x + 220  // Start new row after 3 movies
+        let newY = if moviesInRow = 2 then y + 345 else y  // Move to next row after 3 movies
+
+        // Recurse with the remaining seats and updated coordinates
+        let newMoviesInRow = if moviesInRow = 2 then 0 else moviesInRow + 1
+        addMovieCards rest form newX newY newMoviesInRow
+
+
+[<EntryPoint>]
 let main argv =
     Application.EnableVisualStyles()
     Application.SetCompatibleTextRenderingDefault(false)
-    
-    // Create the form
-    let form = new Form(Text = "Register Form", Width = 300, Height = 200)
-    
-    // Create a label and textbox for Username
-    let lblUsername = new Label(Text = "Username:", Top = 20, Left = 20, AutoSize = true)
-    let txtUsername = new TextBox(Top = lblUsername.Top, Left = 120, Width = 150)
-    
-    // Create a label and textbox for Password
-    let lblPassword = new Label(Text = "Password:", Top = 60, Left = 20, AutoSize = true)
-    let txtPassword = new TextBox(Top = lblPassword.Top, Left = 120, Width = 150, PasswordChar = '/')
-    
-    // Create a button to submit the form
-    let btnSubmit = new Button(Text = "Register", Top = 100, Left = 120, Width = 150)
-    btnSubmit.Click.Add (fun _ -> 
-        MessageBox.Show(sprintf "Username: %s\nPassword: %s" txtUsername.Text txtPassword.Text, "Info")
-        |> ignore
-    )
-    
-    // Add controls to the form
-    form.Controls.AddRange([| lblUsername; txtUsername; lblPassword; txtPassword; btnSubmit |])
-    
-    // Run the application
+
+    let form = new Form()
+    form.Text <- "Movies"
+    form.Size <- Size(690, 600)
+    form.AutoScroll <- true
+    form.MaximizeBox <- false
+    form.MinimizeBox <- false
+    form.MaximumSize <- form.Size
+    form.MinimumSize <- form.Size
+
+
+    let seats = loadSeats
+    // Display movies
+    addMovieCards (Seq.toList seats) form 10 10 0 // Convert list to sequence
+
     Application.Run(form)
-    0 // Return an integer exit code
+    0
