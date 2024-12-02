@@ -7,16 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Images\f08434c8-ec5a-4bde-950a-d39d64158ca7.jpg" />
-    <Content Include="Images\IMG 6_4.png" />
-    <Content Include="Images\Screenshot 2023-12-19 015523.png" />
-    <Content Include="Database\Data.txt" />
-    <Compile Include="CinemaSeatTypes.fs" />
-    <Compile Include="FileReader.fs" />
-    <Compile Include="Program.fs" />
+    <EmbeddedResource Remove="Database\**" />
+    <EmbeddedResource Remove="Images\**" />
   </ItemGroup>
 
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="CinemaSeatTypes.fs" />
+    <Compile Include="FileReader.fs" />
+    <Compile Include="UI\HallSeats.fs" />
+    <Compile Include="UI\BookingForm.fs" />
+    <Compile Include="UI\MovieCard.fs" />
+    <Compile Include="test.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
 
 
 </Project>

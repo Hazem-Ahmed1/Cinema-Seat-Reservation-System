@@ -50,3 +50,15 @@ let parseLineToSeat (line: string) : Seat option =
     | ex ->
         printfn "Failed to parse line: %s. Error: %s" line ex.Message
         None
+
+
+        // Read lines from the file
+let loadSeats =
+    let filePath = @"Data.txt"
+    let lines = readLinesLazy filePath
+
+    // Map lines to Seat objects
+    let seats =
+        lines
+        |> Seq.choose parseLineToSeat // Filters out lines that cannot be parsed
+    Seq.toList(seats)
