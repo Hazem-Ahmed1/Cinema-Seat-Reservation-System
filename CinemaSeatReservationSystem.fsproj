@@ -17,7 +17,6 @@
     <Compile Include="UI\HallSeats.fs" />
     <Compile Include="UI\BookingForm.fs" />
     <Compile Include="UI\MovieCard.fs" />
-    <Compile Include="test.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

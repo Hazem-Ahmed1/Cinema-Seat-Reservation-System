@@ -22,5 +22,5 @@ type Seat = {
 
 
 
-type CiemaSeats = Seat List
+type CinemaSeats = Seat List
 

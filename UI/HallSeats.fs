@@ -16,7 +16,7 @@ let createGrid (rowCount: int) (columnCount: int) =
 
 let rec addRowStyles (grid: TableLayoutPanel) (count: int) =
     if count > 0 then
-        grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f / 3.0f))
+        grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f / 3.0f)) |> ignore
         addRowStyles grid (count - 1)
 
 
@@ -24,7 +24,7 @@ let rec addRowStyles (grid: TableLayoutPanel) (count: int) =
 // Function to add column styles recursively
 let rec addColumnStyles (grid: TableLayoutPanel) (count: int) =
     if count > 0 then
-        grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f / 12.0f))
+        grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f / 12.0f)) |> ignore
         addColumnStyles grid (count - 1)
 
 
@@ -32,6 +32,7 @@ let rec addColumnStyles (grid: TableLayoutPanel) (count: int) =
 let createSeatButton (seat: Seat) =
     let button = new Button(Text = $"{seat.Row},{seat.Column}", Dock = DockStyle.Fill)
     button.BackColor <- if seat.Available then Color.LightGreen else Color.Red
+    button.Enabled <- seat.Available // Disable 
     button.Click.Add(fun _ ->
         let status = if seat.Available then "Available" else "Unavailable"
         MessageBox.Show($"Row: {seat.Row}\nColumn: {seat.Column}\nStatus: {status}") |> ignore
@@ -49,3 +50,5 @@ let rec addSeatsToGrid (grid: TableLayoutPanel) (seats: Seat list) =
         // Recurse with the remaining seats
         addSeatsToGrid grid rest
 
+
+    

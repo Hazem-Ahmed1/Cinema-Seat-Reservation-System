@@ -1,0 +1,7 @@
+Hall 1,Interstellar|Sci-Fi|8.8|D:\Cinema-Seat-Reservation-System\MoviesPosters\Interstellar.jpg,Premium,3,7,10,true,2024-03-15 19:30:00
+Hall 2,Avatar|Science Fiction|8.5|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Avatar.jpg,Standard,3,4,8,true,2024-03-15 20:00:00
+Hall 2,Avatar|Science Fiction|8.5|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Avatar.jpg,Standard,3,9,8,true,2024-03-15 20:00:00
+Hall 2,Avatar|Science Fiction|8.5|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Avatar.jpg,Standard,2,8,8,false,2024-03-15 20:00:00
+Hall 2,Avatar|Science Fiction|8.5|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Avatar.jpg,Standard,3,7,8,false,2024-03-15 20:00:00
+Hall 2,Avatar|Science Fiction|8.5|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Avatar.jpg,Standard,2,3,8,true,2024-03-15 20:00:00
+Hall 3,The Matrix|Sci-Fi|8.7|D:\Cinema-Seat-Reservation-System\MoviesPosters\The Matrix.jpg,VIP,2,6,5,true,2024-03-16 18:45:00

@@ -54,7 +54,7 @@ let parseLineToSeat (line: string) : Seat option =
 
         // Read lines from the file
 let loadSeats =
-    let filePath = @"Data.txt"
+    let filePath = @"D:\Cinema-Seat-Reservation-System\Database\Data.txt"
     let lines = readLinesLazy filePath
 
     // Map lines to Seat objects
@@ -62,3 +62,8 @@ let loadSeats =
         lines
         |> Seq.choose parseLineToSeat // Filters out lines that cannot be parsed
     Seq.toList(seats)
+
+let filterSeatsByHall (seats: Seat list) =
+    seats
+    |> Seq.distinctBy (fun seat -> seat.HallName)
+    |> Seq.toList
