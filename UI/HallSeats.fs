@@ -2,6 +2,7 @@
 open System.Drawing
 open System.Windows.Forms
 open CinemaSeatTypes
+open Ticket
 
 // Function to create the grid
 let createGrid (rowCount: int) (columnCount: int) =
@@ -34,6 +35,7 @@ let createSeatButton (seat: Seat) =
     button.BackColor <- if seat.Available then Color.LightGreen else Color.Red
     button.Enabled <- seat.Available // Disable 
     button.Click.Add(fun _ ->
+        let createTicket = new createTicketForm()
         let status = if seat.Available then "Available" else "Unavailable"
         MessageBox.Show($"Row: {seat.Row}\nColumn: {seat.Column}\nStatus: {status}") |> ignore
     )

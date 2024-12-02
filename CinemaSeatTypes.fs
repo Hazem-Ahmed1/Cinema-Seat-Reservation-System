@@ -15,7 +15,7 @@ type Seat = {
     Row: int
     Column: int
     Available: bool
-    ShowTime : DateTime
+    ShowTime : string
 }
 
 // string * string * int * int * bool * DateTime
