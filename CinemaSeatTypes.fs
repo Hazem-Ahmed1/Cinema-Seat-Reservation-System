@@ -14,9 +14,12 @@ type Seat = {
     Class: string
     Row: int
     Column: int
+    Price: int
     Available: bool
     ShowTime : string
 }
+
+
 
 // string * string * int * int * bool * DateTime
 

@@ -5,6 +5,8 @@ open System.Drawing
 open System.Windows.Forms
 open QRCoder
 open System.IO
+open CinemaSeatTypes
+open Ticketdetails
 
 // Function to generate a QR code as a Bitmap
 let generateQrCode (data: string) =
@@ -21,7 +23,7 @@ let saveControlAsImage (control: Control) (filePath: string) =
     printfn "Ticket saved as image at: %s" filePath
 
 // Function to create the Ticket GUI
-type createTicketForm() as this = 
+type createTicketForm(seat : Seat) as this = 
     inherit Form()
 
     do
@@ -36,40 +38,41 @@ type createTicketForm() as this =
         this.AutoScroll  <- true
 
         // Add ticket background panel
-        let ticketPanel = new Panel(Width = 783, Height = 250, BackColor = Color.White)
+        let ticketPanel = new Panel(Width = 783, Height = 280, BackColor = Color.White)
         ticketPanel.Location <- Point(0, 0)
         this.Controls.Add(ticketPanel)
 
         // Add "Customer" label
-        let lblCinemaTicket = new Label(Text = "Customer Name", Font = new Font("Arial", 20.0f, FontStyle.Bold), ForeColor = Color.Blue, AutoSize = true)
+        let lblCinemaTicket = new Label(Text = "CINEMA TICKET", Font = new Font("Arial", 20.0f, FontStyle.Bold), ForeColor = Color.Blue, AutoSize = true)
         lblCinemaTicket.Location <- Point(275, 30)
         ticketPanel.Controls.Add(lblCinemaTicket)
 
         // Add "CINEMA TICKET" label
-        let lblCinemaTicket = new Label(Text = "CINEMA TICKET", Font = new Font("Arial", 16.0f, FontStyle.Bold), ForeColor = Color.Blue, AutoSize = true)
-        lblCinemaTicket.Location <- Point(300, 215)
+        let lblCinemaTicket = new Label(Text = "Customer Name", Font = new Font("Arial", 16.0f, FontStyle.Bold), ForeColor = Color.Blue, AutoSize = true)
+        lblCinemaTicket.Location <- Point(515, 150)
         ticketPanel.Controls.Add(lblCinemaTicket)
 
-        // Add Theater, Seat, Date, and Price details
-        let LabelHall = new Label(Text = "Hall: 03 / SEAT: S16", Font = new Font("Arial", 15.0f), AutoSize = true)
+        // Add Hall, Seat, Date, and Price details
+        let LabelHall = new Label(Text = $"{seat.HallName} / SEAT: {seat.Class.[0]}{seat.Row},{seat.Column}", Font = new Font("Arial", 15.0f), AutoSize = true)
         LabelHall.Location <- Point(35, 100)
         ticketPanel.Controls.Add(LabelHall)
 
-        let lblDate = new Label(Text = "DATE: 10/07/2022", Font = new Font("Arial", 15.0f), AutoSize = true)
+        let lblDate = new Label(Text = $"Date: {seat.ShowTime.Split(' ')[0]}", Font = new Font("Arial", 15.0f), AutoSize = true)
         lblDate.Location <- Point(35, 150)
         ticketPanel.Controls.Add(lblDate)
 
-        let lblPrice = new Label(Text = "PRICE: 10 USD", Font = new Font("Arial", 15.0f), AutoSize = true)
+        let lblPrice = new Label(Text = $"PRICE: {seat.Price} USD", Font = new Font("Arial", 15.0f), AutoSize = true)
         lblPrice.Location <- Point(35, 200)
         ticketPanel.Controls.Add(lblPrice)
 
         // Add Movie Name
-        let lblMovieName = new Label(Text = "MOVIE Name", Font = new Font("Arial", 16.0f, FontStyle.Bold), ForeColor = Color.Gray, AutoSize = true)
-        lblMovieName.Location <- Point(600, 100)
+        let lblMovieName = new Label(Text = $"MOVIE: {seat.Movie.Name}", Font = new Font("Arial", 16.0f, FontStyle.Bold), ForeColor = Color.Gray, AutoSize = true)
+        lblMovieName.Location <- Point(515, 100)
         ticketPanel.Controls.Add(lblMovieName)
 
-        let lblTicketNo = new Label(Text = "NO: 0123456987", Font = new Font("Arial", 15.0f), AutoSize = true)
-        lblTicketNo.Location <- Point(600, 150)
+        let ticket = ticket seat
+        let lblTicketNo = new Label(Text = $"Ticket ID: {ticket.TicketID}", Font = new Font("Arial", 15.0f), AutoSize = true)
+        lblTicketNo.Location <- Point(170, 240)
         ticketPanel.Controls.Add(lblTicketNo)
 
         // Add a placeholder for the QR code
@@ -77,22 +80,17 @@ type createTicketForm() as this =
         barcodePanel.Location <- Point(310, 70)
         ticketPanel.Controls.Add(barcodePanel)
 
+        let lblRightTime = new Label(Text = $"TIME: {seat.ShowTime.Split(' ')[1]} {seat.ShowTime.Split(' ')[2]}", Font = new Font("Arial", 15.0f), AutoSize = true)
+        lblRightTime.Location <- Point(515, 200)
+        ticketPanel.Controls.Add(lblRightTime)
+
         // Generate and display the QR code
-        let ticketData = "Theater: 03, Seat: S16, Date: 10/07/2022, Time: 11:45 PM, Movie: MOVIE 3D, No: 0123456987"
+        let ticketData = $"Hall: {seat.HallName}, Seat: {seat.Class.[0]}{seat.Row},{seat.Column} , Date:{seat.ShowTime.Split(' ')[0]}, Time: {seat.ShowTime.Split(' ')[1]} {seat.ShowTime.Split(' ')[2]}, Movie: {seat.Movie.Name}, Ticket No: {ticket.TicketID}"
         let qrCodeImage = generateQrCode ticketData
 
         // Display the QR code in the form
         let qrPictureBox = new PictureBox(Image = qrCodeImage, SizeMode = PictureBoxSizeMode.StretchImage, Width = 150, Height = 150)
         barcodePanel.Controls.Add(qrPictureBox)
-
-        //// Add Date and Time on the right side
-        //let lblRightDate = new Label(Text = "DATE: 10/07/2022", Font = new Font("Arial", 10.0f), AutoSize = true)
-        //lblRightDate.Location <- Point(600, 190)
-        //ticketPanel.Controls.Add(lblRightDate)
-
-        let lblRightTime = new Label(Text = "TIME: 11:45 PM", Font = new Font("Arial", 15.0f), AutoSize = true)
-        lblRightTime.Location <- Point(600, 200)
-        ticketPanel.Controls.Add(lblRightTime)
 
         // Add print button
         let btnPrint = new Button(Text = "Save Ticket",BackColor = Color.LightGreen, Font = new Font("Arial", 12.0f), Width = 150, Height = 40)
@@ -101,8 +99,12 @@ type createTicketForm() as this =
 
         // Event handler for saving the ticket as an image
         btnPrint.Click.Add(fun _ ->
-            let outputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "D:\Collage\Abdelwahed\4th\First Term\PL3\Project", "CinemaTicket.png")
+            let outputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Tickets", $"CinemaTicket-{ticket.TicketID.Split('-')[0]}.png")
+            let outputFile = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\TicketDetails.txt"
             saveControlAsImage ticketPanel outputPath
+            //let TicketFile = customSerializeTicket(ticket)
+            saveTicketToTxt ticket outputFile
+
             MessageBox.Show(sprintf "Ticket saved as image at: %s" outputPath, "Success") |> ignore
         )
         this.Show()
