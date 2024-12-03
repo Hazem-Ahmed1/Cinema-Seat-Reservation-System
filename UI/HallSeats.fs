@@ -2,6 +2,8 @@
 open System.Drawing
 open System.Windows.Forms
 open CinemaSeatTypes
+open FileReader
+open UpdateFileBooking
 open Ticket
 
 // Function to create the grid
@@ -17,7 +19,7 @@ let createGrid (rowCount: int) (columnCount: int) =
 
 let rec addRowStyles (grid: TableLayoutPanel) (count: int) =
     if count > 0 then
-        grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f / 3.0f)) |> ignore
+        grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f / 6.0f)) |> ignore
         addRowStyles grid (count - 1)
 
 
@@ -25,19 +27,25 @@ let rec addRowStyles (grid: TableLayoutPanel) (count: int) =
 // Function to add column styles recursively
 let rec addColumnStyles (grid: TableLayoutPanel) (count: int) =
     if count > 0 then
-        grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f / 12.0f)) |> ignore
+        grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f / 6.0f)) |> ignore
         addColumnStyles grid (count - 1)
 
 
 // Function to create a button for a seat
 let createSeatButton (seat: Seat) =
-    let button = new Button(Text = $"{seat.Row},{seat.Column}", Dock = DockStyle.Fill)
-    button.BackColor <- if seat.Available then Color.LightGreen else Color.Red
-    button.Enabled <- seat.Available // Disable 
+    let button = new Button(Text = $"{seat.Row},{seat.Column}", Dock = DockStyle.Fill,Font = new Font("Arial", 20.0f, FontStyle.Bold))
+    button.BackColor <- 
+        if seat.Row <= 2 && seat.Available then Color.Gold 
+        else if seat.Available then Color.LightBlue else Color.Red
+    button.Enabled <- seat.Available // Disable
+    //button.Enabled <- updateStatus
+
     button.Click.Add(fun _ ->
-        let createTicket = new createTicketForm()
-        let status = if seat.Available then "Available" else "Unavailable"
-        MessageBox.Show($"Row: {seat.Row}\nColumn: {seat.Column}\nStatus: {status}") |> ignore
+        let createTicket = new createTicketForm(seat)
+        let UpdateStatus = updateLineByCriteria filePath seat.HallName seat.Row seat.Column changeAvailability
+        //let status = if seat.Available then "Available" else "Unavailable"
+        button.Enabled <-  not UpdateStatus
+        button.BackColor <- Color.Red
     )
     button
 
