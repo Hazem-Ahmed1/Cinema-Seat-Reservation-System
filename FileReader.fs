@@ -42,8 +42,9 @@ let parseLineToSeat (line: string) : Seat option =
                 Class = parts.[2] // Seat Class
                 Row = int parts.[3] // Row
                 Column = int parts.[4] // Column
+                Price = int parts.[5] // Price
                 Available = Boolean.Parse(parts.[6]) // Available status
-                ShowTime = DateTime.Parse(parts.[7]).ToString("yyyy/MM/dd") // ShowTime
+                ShowTime = DateTime.Parse(parts.[7]).ToString("yyyy/MM/dd hh:mm tt") // ShowTime
             }
         else None
     with
@@ -53,8 +54,8 @@ let parseLineToSeat (line: string) : Seat option =
 
 
         // Read lines from the file
+let filePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Data.txt"
 let loadSeats =
-    let filePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Data.txt"
     let lines = readLinesLazy filePath
 
     // Map lines to Seat objects
