@@ -25,7 +25,7 @@ let main argv =
         form.MaximumSize <- form.Size
         form.MinimumSize <- form.Size
 
-        let seats = loadSeats
+        let seats = loadSeats()
         let filteredSeats = filterSeatsByHall seats
         addMovieCards (filteredSeats) form 10 10 0
 

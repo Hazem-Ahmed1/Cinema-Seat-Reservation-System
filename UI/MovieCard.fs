@@ -63,7 +63,7 @@ let createMovieCard (seat: Seat) (x: int) (y: int) =
     // Click event handler
     ReserveButton.Click.Add(fun _ ->
         // Create and show the new window/form
-        let detailsForm = new MovieDetailsForm(seat, loadSeats)
+        let detailsForm = new MovieDetailsForm(seat, loadSeats())
         detailsForm.Show())
 
     panel
