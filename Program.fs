@@ -13,6 +13,7 @@ let main argv =
 
     // Show login form first
     let loginForm = new LoginForm()
+
     if loginForm.ShowDialog() = DialogResult.OK then
         let loggedInUser = loginForm.Tag :?> string // Get the username from the Tag property
         printfn "Logged-in user: %s" loggedInUser
@@ -24,11 +25,11 @@ let main argv =
         form.MinimizeBox <- false
         form.MaximumSize <- form.Size
         form.MinimumSize <- form.Size
-        
+
         let seats = loadSeats
         let filteredSeats = filterSeatsByHall seats
         addMovieCards (filteredSeats) form 10 10 0
-        
+
         Application.Run(form)
-    
+
     0

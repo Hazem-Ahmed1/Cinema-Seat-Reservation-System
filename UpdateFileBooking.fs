@@ -19,11 +19,11 @@ let updateLineByCriteria (filePath: string) (hallName: string) (row: int) (colum
         lines
         |> Array.tryFindIndex (fun line ->
             let parts = line.Split(',')
-            parts.Length > 6 &&
-            parts.[0].Trim() = hallName &&
-            parts.[3].Trim() = row.ToString() &&
-            parts.[4].Trim() = column.ToString() 
-        )
+
+            parts.Length > 6
+            && parts.[0].Trim() = hallName
+            && parts.[3].Trim() = row.ToString()
+            && parts.[4].Trim() = column.ToString())
 
     match matchingIndex with
     | Some index ->
@@ -31,17 +31,13 @@ let updateLineByCriteria (filePath: string) (hallName: string) (row: int) (colum
         lines.[index] <- updatedLine
         File.WriteAllLines(filePath, lines)
         true // Indicate success
-    | None ->
-        false
+    | None -> false
 
 let changeAvailability (line: string) : string =
     let parts = line.Split(',')
+
     if parts.Length > 7 && parts.[6].Trim() = "true" then
         parts.[6] <- "false"
         String.Join(",", parts)
     else
-        line 
-
-
-
-
+        line

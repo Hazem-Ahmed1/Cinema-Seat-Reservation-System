@@ -9,7 +9,7 @@ open FileReader
 
 
 // Function to create a movie card
-let createMovieCard (seat: Seat) (x: int) (y: int)=
+let createMovieCard (seat: Seat) (x: int) (y: int) =
     let panel = new Panel()
     panel.Size <- Size(200, 325)
     panel.Location <- Point(x, y)
@@ -64,9 +64,8 @@ let createMovieCard (seat: Seat) (x: int) (y: int)=
     // Click event handler
     ReserveButton.Click.Add(fun _ ->
         // Create and show the new window/form
-        let detailsForm = new MovieDetailsForm (seat, loadSeats)
-        detailsForm.Show()
-    )
+        let detailsForm = new MovieDetailsForm(seat, loadSeats)
+        detailsForm.Show())
 
     panel
 
@@ -74,14 +73,14 @@ let createMovieCard (seat: Seat) (x: int) (y: int)=
 
 let rec addMovieCards (seats: Seat List) (form: Form) (x: int) (y: int) (moviesInRow: int) =
     match seats with
-    | [] -> ()  // Base case: no more seats to process
+    | [] -> () // Base case: no more seats to process
     | seat :: rest ->
         let card = createMovieCard seat x y
         form.Controls.Add(card)
 
         // Calculate new x and y
-        let newX = if moviesInRow = 2 then 10 else x + 220  // Start new row after 3 movies
-        let newY = if moviesInRow = 2 then y + 345 else y  // Move to next row after 3 movies
+        let newX = if moviesInRow = 2 then 10 else x + 220 // Start new row after 3 movies
+        let newY = if moviesInRow = 2 then y + 345 else y // Move to next row after 3 movies
 
         // Recurse with the remaining seats and updated coordinates
         let newMoviesInRow = if moviesInRow = 2 then 0 else moviesInRow + 1
