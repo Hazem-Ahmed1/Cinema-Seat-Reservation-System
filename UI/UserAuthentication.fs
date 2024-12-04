@@ -33,9 +33,9 @@ module UserAuthentication =
             // Use Regex to match the email pattern
             Regex.IsMatch(email, emailPattern)
 
-    let private userDatabasePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Users.txt"
+    
 
-    let registerUser (username: string) (password: string) (email: string) =
+    let registerUser (username: string) (password: string) (email: string) (userDatabasePath : string) =
         if
             String.IsNullOrWhiteSpace(username)
             || String.IsNullOrWhiteSpace(password)
@@ -57,6 +57,13 @@ module UserAuthentication =
                             fields.Length > 2 && fields.[2].Trim() = email)
                     then
                         Error "This email is already registered."
+                    elif
+                        existingUsers
+                        |> Array.exists (fun line ->
+                            let fields = line.Split(',')
+                            fields.Length > 2 && fields.[0].Trim() = username)
+                    then
+                        Error "This Username is already registered."
                     else
                         // Proceed to register the user
                         let passwordHash = hashPassword password
@@ -101,7 +108,7 @@ module UserAuthentication =
                 Error(sprintf "Registration failed: %s" ex.Message)
 
 
-    let authenticateUser (username: string) (password: string) =
+    let authenticateUser (username: string) (password: string) (userDatabasePath : string) =
         try
             let users =
                 File.ReadAllLines(userDatabasePath)

@@ -4,7 +4,7 @@ open System.Drawing
 open System.Windows.Forms
 open UserAuthentication
 
-type RegisterForm() as this =
+type RegisterForm(filePath: string) as this =
     inherit Form()
 
     let createTextBox label yPos isPassword =
@@ -59,7 +59,7 @@ type RegisterForm() as this =
                 MessageBox.Show("Passwords do not match", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 |> ignore
             else
-                match registerUser usernameTextBox.Text passwordTextBox.Text emailTextBox.Text with
+                match registerUser usernameTextBox.Text passwordTextBox.Text emailTextBox.Text filePath with
                 | Ok _ ->
                     MessageBox.Show("Registration Successful!", "Success") |> ignore
                     this.DialogResult <- DialogResult.OK

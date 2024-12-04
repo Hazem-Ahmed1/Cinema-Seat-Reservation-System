@@ -9,9 +9,9 @@ open CinemaReservation
 let main argv =
     Application.EnableVisualStyles()
     Application.SetCompatibleTextRenderingDefault(false)
-
+    let userDatabasePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Users.txt"
     // Show login form first
-    let loginForm = new LoginForm()
+    let loginForm = new LoginForm(userDatabasePath)
 
     if loginForm.ShowDialog() = DialogResult.OK then
         let loggedInUser = loginForm.Tag :?> string // Get the username from the Tag property

@@ -7,7 +7,7 @@ open UserAuthentication
 
     
 
-type LoginForm() as this =
+type LoginForm(filePath: string) as this =
 
     inherit Form()
 
@@ -57,7 +57,7 @@ type LoginForm() as this =
 
         // Login button click event
         loginButton.Click.Add(fun _ ->
-            match authenticateUser usernameTextBox.Text passwordTextBox.Text with
+            match authenticateUser usernameTextBox.Text passwordTextBox.Text filePath with
             | Ok _ ->
                 this.Tag <- usernameTextBox.Text // Store the username in the Tag property
                 MessageBox.Show("Login Successful!", "Success") |> ignore
@@ -69,7 +69,7 @@ type LoginForm() as this =
         // Register link click event
         registerLinkLabel.Click.Add(fun _ ->
             this.Hide() // Hide the login form
-            use registerForm = new RegisterForm()
+            use registerForm = new RegisterForm(filePath)
 
             if registerForm.ShowDialog() = DialogResult.OK then
                 MessageBox.Show(
