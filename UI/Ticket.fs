@@ -154,12 +154,11 @@ type createTicketForm(seat: Seat) as this =
             let outputPath =
                 Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                    "D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Tickets",
+                    "Tickets",
                     $"CinemaTicket-{ticket.TicketID.Split('-')[0]}.png"
                 )
 
-            let outputFile =
-                @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\TicketDetails.txt"
+            let outputFile = @"Database\TicketDetails.txt"
 
             saveControlAsImage ticketPanel outputPath
             //let TicketFile = customSerializeTicket(ticket)
