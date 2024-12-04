@@ -1,4 +1,4 @@
-﻿module Ticket
+module Ticket
 
 open System
 open System.Drawing
@@ -101,7 +101,7 @@ type createTicketForm() as this =
 
         // Event handler for saving the ticket as an image
         btnPrint.Click.Add(fun _ ->
-            let outputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "D:\Collage\Abdelwahed\4th\First Term\PL3\Project", "CinemaTicket.png")
+            let outputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "CinemaTicket.png")
             saveControlAsImage ticketPanel outputPath
             MessageBox.Show(sprintf "Ticket saved as image at: %s" outputPath, "Success") |> ignore
         )

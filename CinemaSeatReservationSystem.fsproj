@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -14,6 +14,9 @@
   <ItemGroup>
     <Compile Include="CinemaSeatTypes.fs" />
     <Compile Include="FileReader.fs" />
+    <Compile Include="UI\UserAuthentication.fs" />
+    <Compile Include="UI\RegisterForm.fs" />
+    <Compile Include="UI\LoginForm.fs" />
     <Compile Include="UI\Ticket.fs" />
     <Compile Include="UI\HallSeats.fs" />
     <Compile Include="UI\BookingForm.fs" />
