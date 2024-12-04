@@ -1,10 +1,10 @@
-open System
+﻿open System
 open System.Windows.Forms
 open System.Drawing
 open FileReader
 open MovieCard
 open CinemaSeatTypes
-
+open CinemaReservation
 
 [<EntryPoint>]
 let main argv =
@@ -15,7 +15,7 @@ let main argv =
     let loginForm = new LoginForm()
     if loginForm.ShowDialog() = DialogResult.OK then
         let loggedInUser = loginForm.Tag :?> string // Get the username from the Tag property
-        printfn "Logged-in user: "
+        printfn "Logged-in user: %s" loggedInUser
         let form = new Form()
         form.Text <- "Movies"
         form.Size <- Size(690, 600)
