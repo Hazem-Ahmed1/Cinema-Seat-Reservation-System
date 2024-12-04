@@ -1,9 +1,11 @@
 ﻿namespace CinemaReservation
 
-open System
 open System.Drawing
 open System.Windows.Forms
 open UserAuthentication
+
+
+    
 
 type LoginForm() as this =
 

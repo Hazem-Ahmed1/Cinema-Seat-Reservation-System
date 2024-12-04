@@ -7,6 +7,7 @@ open QRCoder
 open System.IO
 open CinemaSeatTypes
 open Ticketdetails
+open UserSession
 
 // Function to generate a QR code as a Bitmap
 let generateQrCode (data: string) =
@@ -42,7 +43,7 @@ type createTicketForm(seat: Seat) as this =
         ticketPanel.Location <- Point(0, 0)
         this.Controls.Add(ticketPanel)
 
-        // Add "Customer" label
+        // Add "CINEMA TICKET" label
         let lblCinemaTicket =
             new Label(
                 Text = "CINEMA TICKET",
@@ -54,10 +55,10 @@ type createTicketForm(seat: Seat) as this =
         lblCinemaTicket.Location <- Point(275, 30)
         ticketPanel.Controls.Add(lblCinemaTicket)
 
-        // Add "CINEMA TICKET" label
+        // Add "Customer Name" label
         let lblCinemaTicket =
             new Label(
-                Text = "Customer Name",
+                Text = $"Name: {getuser(SessionStorageFilePath)}",
                 Font = new Font("Arial", 16.0f, FontStyle.Bold),
                 ForeColor = Color.Blue,
                 AutoSize = true
@@ -101,7 +102,7 @@ type createTicketForm(seat: Seat) as this =
         lblMovieName.Location <- Point(515, 100)
         ticketPanel.Controls.Add(lblMovieName)
 
-        let ticket = ticket seat
+        let ticket = ticket seat 
 
         let lblTicketNo =
             new Label(Text = $"Ticket ID: {ticket.TicketID}", Font = new Font("Arial", 15.0f), AutoSize = true)
@@ -154,14 +155,13 @@ type createTicketForm(seat: Seat) as this =
             let outputPath =
                 Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                    "Tickets",
+                    "D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Tickets",
                     $"CinemaTicket-{ticket.TicketID.Split('-')[0]}.png"
                 )
 
-            let outputFile = @"Database\TicketDetails.txt"
+            let outputFile = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\TicketDetails.txt"
 
             saveControlAsImage ticketPanel outputPath
-            //let TicketFile = customSerializeTicket(ticket)
             saveTicketToTxt ticket outputFile
 
             MessageBox.Show(sprintf "Ticket saved as image at: %s" outputPath, "Success")

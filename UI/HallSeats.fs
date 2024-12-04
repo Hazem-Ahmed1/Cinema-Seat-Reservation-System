@@ -7,6 +7,8 @@ open FileReader
 open UpdateFileBooking
 open Ticket
 
+
+
 // Function to create the grid
 let createGrid (rowCount: int) (columnCount: int) =
     let grid =
@@ -51,14 +53,12 @@ let createSeatButton (seat: Seat) =
         else Color.Red
 
     button.Enabled <- seat.Available // Disable
-    //button.Enabled <- updateStatus
 
     button.Click.Add(fun _ ->
         let createTicket = new createTicketForm (seat)
 
         let UpdateStatus =
             updateLineByCriteria filePath seat.HallName seat.Row seat.Column changeAvailability
-        //let status = if seat.Available then "Available" else "Unavailable"
         button.Enabled <- not UpdateStatus
         button.BackColor <- Color.Red)
 
@@ -66,7 +66,7 @@ let createSeatButton (seat: Seat) =
 
 
 // Function to add seats to the grid recursively
-let rec addSeatsToGrid (grid: TableLayoutPanel) (seats: Seat list) =
+let rec addSeatsToGrid (grid: TableLayoutPanel) (seats: Seat list)=
     match seats with
     | [] -> () // Base case: no more seats to process
     | seat :: rest ->

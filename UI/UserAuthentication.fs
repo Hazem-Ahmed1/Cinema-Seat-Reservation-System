@@ -5,13 +5,14 @@ open System
 open System.IO
 open System.Security.Cryptography
 
-type User =
-    { Username: string
-      PasswordHash: string
-      Email: string
-      CreatedAt: DateTime }
-
 module UserAuthentication =
+
+    type User =
+        { Username: string
+          PasswordHash: string
+          Email: string
+          CreatedAt: DateTime }
+
     let private hashPassword (password: string) =
         use sha256 = SHA256.Create()
 
@@ -32,7 +33,7 @@ module UserAuthentication =
             // Use Regex to match the email pattern
             Regex.IsMatch(email, emailPattern)
 
-    let private userDatabasePath = @"Database\Users.txt"
+    let private userDatabasePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Users.txt"
 
     let registerUser (username: string) (password: string) (email: string) =
         if

@@ -1,7 +1,5 @@
 ﻿module CinemaSeatTypes
 
-open System
-
 // Define a movie type
 type Movie =
     { Name: string
@@ -18,7 +16,6 @@ type Seat =
       Price: int
       Available: bool
       ShowTime: string }
-
 
 
 // string * string * int * int * bool * DateTime

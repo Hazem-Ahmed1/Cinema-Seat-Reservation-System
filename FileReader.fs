@@ -56,7 +56,7 @@ let parseLineToSeat (line: string) : Seat option =
 
 
 // Read lines from the file
-let filePath = @"Database\Data.txt"
+let filePath = @"D:\Collage\Abdelwahed\4th\First Term\PL3\Project\Cinema-Seat-Reservation-System\Database\Data.txt"
 
 let loadSeats =
     let lines = readLinesLazy filePath
