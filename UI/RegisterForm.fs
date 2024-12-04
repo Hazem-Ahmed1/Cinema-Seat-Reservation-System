@@ -41,15 +41,6 @@ type RegisterForm() as this =
                 ForeColor = Color.White
             )
 
-        let loginLinkLabel =
-            new Label(
-                Text = "Already have an account? Login here",
-                Location = Point(50, 380),
-                ForeColor = Color.Blue,
-                AutoSize = true,
-                Cursor = Cursors.Hand
-            )
-
         // Add controls
         this.Controls.AddRange(
             [| usernameLabel
@@ -60,8 +51,7 @@ type RegisterForm() as this =
                passwordTextBox
                confirmPasswordLabel
                confirmPasswordTextBox
-               registerButton
-               loginLinkLabel |]
+               registerButton |]
         )
 
         // Register button click event
@@ -79,12 +69,3 @@ type RegisterForm() as this =
                     MessageBox.Show(msg, "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     |> ignore)
 
-// Login link click event
-//loginLinkLabel.Click.Add(fun _ ->
-//    this.Hide()
-//    let loginForm = new LoginForm()
-//    if loginForm.ShowDialog() = DialogResult.OK then
-//        this.Close()
-//    else
-//        this.Show()
-//)
