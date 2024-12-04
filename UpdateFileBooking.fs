@@ -1,9 +1,7 @@
 ﻿module UpdateFileBooking
 
 open System
-open System.Drawing
 open System.IO
-open System.Windows.Forms
 
 let updateLineByCriteria (filePath: string) (hallName: string) (row: int) (column: int) (updateFunc: string -> string) =
 

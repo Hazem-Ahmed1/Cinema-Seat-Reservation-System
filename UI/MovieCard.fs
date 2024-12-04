@@ -1,6 +1,5 @@
 ﻿module MovieCard
 
-open System
 open System.Windows.Forms
 open System.Drawing
 open BookingForm

@@ -20,16 +20,16 @@ type MovieDetailsForm(movie: Seat, allSeats: CinemaSeats) as this =
 
         // Labels for movie details
         let titleLabel =
-            new Label(Text = $"Title: {movie.Movie.Name}", Location = Point(10, 10), Size = Size(250, 20))
+            new Label(Text = $"Title: {movie.Movie.Name}", Font = new Font("Arial", 15.0f, FontStyle.Bold), Location = Point(10, 10), Size = Size(250, 20))
 
         let genreLabel =
-            new Label(Text = $"Genre: {movie.Movie.Genre}", Location = Point(10, 40), Size = Size(250, 20))
+            new Label(Text = $"Genre: {movie.Movie.Genre}", Font = new Font("Arial", 15.0f, FontStyle.Bold), Location = Point(10, 40), Size = Size(250, 20))
 
         let ratingLabel =
-            new Label(Text = $"Rating: {movie.Movie.Rating:F1}", Location = Point(10, 70), Size = Size(250, 20))
+            new Label(Text = $"Rating: {movie.Movie.Rating:F1}", Font = new Font("Arial", 15.0f, FontStyle.Bold), Location = Point(10, 70), Size = Size(250, 20))
 
         let showTimeLabel =
-            new Label(Text = $"Showtime: {movie.ShowTime}", Location = Point(10, 100), Size = Size(250, 20))
+            new Label(Text = $"Showtime: {movie.ShowTime}", Font = new Font("Arial", 15.0f, FontStyle.Bold), Location = Point(10, 100), Size = Size(250, 20))
 
         let availableIndicator =
             new Label(
@@ -42,13 +42,13 @@ type MovieDetailsForm(movie: Seat, allSeats: CinemaSeats) as this =
                 TextAlign = ContentAlignment.MiddleCenter
             )
 
-        let notAvailableIndicator =
+        let availablePriceIndicator =
             new Label(
-                Text = "Not Available",
-                Location = Point(this.ClientSize.Width - 200, 60),
+                Text = "10 USD",
+                Location = Point(this.ClientSize.Width - 290, 20),
                 Font = new Font("Arial", 15.0f, FontStyle.Bold),
-                Size = Size(200, 30),
-                BackColor = Color.Red,
+                Size = Size(80, 30),
+                BackColor = Color.LightBlue,
                 ForeColor = Color.White,
                 TextAlign = ContentAlignment.MiddleCenter
             )
@@ -57,7 +57,7 @@ type MovieDetailsForm(movie: Seat, allSeats: CinemaSeats) as this =
         let vipIndicator =
             new Label(
                 Text = "VIP (Rows 1-2)",
-                Location = Point(this.ClientSize.Width - 200, 100),
+                Location = Point(this.ClientSize.Width - 200, 60),
                 Font = new Font("Arial", 15.0f, FontStyle.Bold),
                 Size = Size(200, 30),
                 BackColor = Color.Gold,
@@ -65,14 +65,39 @@ type MovieDetailsForm(movie: Seat, allSeats: CinemaSeats) as this =
                 TextAlign = ContentAlignment.MiddleCenter
             )
 
+        let VIPPriceIndicator =
+            new Label(
+                Text = "30 USD",
+                Location = Point(this.ClientSize.Width - 290, 60),
+                Font = new Font("Arial", 15.0f, FontStyle.Bold),
+                Size = Size(80, 30),
+                BackColor = Color.Gold,
+                ForeColor = Color.Black,
+                TextAlign = ContentAlignment.MiddleCenter
+            )
+
+        let notAvailableIndicator =
+            new Label(
+                Text = "Not Available",
+                Location = Point(this.ClientSize.Width - 200, 100),
+                Font = new Font("Arial", 15.0f, FontStyle.Bold),
+                Size = Size(200, 30),
+                BackColor = Color.Red,
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleCenter
+            )
+
+
         // Add the labels to the form
         this.Controls.Add(titleLabel)
         this.Controls.Add(genreLabel)
         this.Controls.Add(ratingLabel)
         this.Controls.Add(showTimeLabel)
         this.Controls.Add(availableIndicator)
+        this.Controls.Add(availablePriceIndicator)
         this.Controls.Add(notAvailableIndicator)
         this.Controls.Add(vipIndicator)
+        this.Controls.Add(VIPPriceIndicator)
 
         // Filter seats for the selected movie
         let movieSeats = allSeats |> List.filter (fun s -> s.HallName = movie.HallName)
